@@ -5,10 +5,6 @@ import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
 import SignIn from "./views/SignIn.tsx";
 
 export const MainLayout: React.FC = () => {
-	// const { currentUser } = useUser();
-
-	// if (!currentUser?.accessToken) return <LoadingPage />;
-
 	return <Outlet />;
 };
 
