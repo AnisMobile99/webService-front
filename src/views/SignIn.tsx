@@ -26,10 +26,10 @@ export default function SignIn() {
 		e.preventDefault();
 		if (!email || !password) return;
 		logIn(email, password)
-			.then((res) => {
-				console.log(res);
+			.then(() => {
+				navigate("/dashboard");
 			})
-			.catch((err) => setErrorMessage(err));
+			.catch((err) => setErrorMessage("Erreur lors de la connexion"));
 	};
 
 	useEffect(() => {
@@ -41,7 +41,6 @@ export default function SignIn() {
 			<CssBaseline />
 			<Box
 				sx={{
-					marginTop: 8,
 					display: "flex",
 					flexDirection: "column",
 					alignItems: "center",
@@ -82,6 +81,7 @@ export default function SignIn() {
 						control={<Checkbox value="remember" color="primary" />}
 						label="Se souvenir de moi"
 					/>
+					{errorMessage && <span>{errorMessage}</span>}
 					<Button
 						type="submit"
 						fullWidth
@@ -91,13 +91,6 @@ export default function SignIn() {
 					>
 						Connexion
 					</Button>
-					<Grid container>
-						<Grid item xs>
-							<Link href="#" variant="body2">
-								Mot de passe oublié ?
-							</Link>
-						</Grid>
-					</Grid>
 				</Box>
 			</Box>
 		</Container>

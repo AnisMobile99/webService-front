@@ -9,7 +9,7 @@ import {
 	onAuthStateChanged,
 	sendPasswordResetEmail,
 } from "firebase/auth";
-import type { User as FirebaseUser } from "firebase/auth";
+import type { User } from "firebase/auth";
 
 // TODO Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -45,9 +45,13 @@ export function resetPassword(email: string) {
 	return sendPasswordResetEmail(auth, email);
 }
 
+interface User {
+	accessToken: string;
+}
+
 // Custom Hook
 export function useAuth() {
-	const [currentUser, setCurrentUser] = useState<FirebaseUser | null>(null);
+	const [currentUser, setCurrentUser] = useState<User | null>(null);
 
 	useEffect(() => {
 		const unsub = onAuthStateChanged(auth, (user) => {
