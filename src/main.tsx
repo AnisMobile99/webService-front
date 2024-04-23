@@ -1,19 +1,18 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom/client";
-import Dashboard from "./views/Dashboard.tsx";
-import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
-import SignIn from "./views/SignIn.tsx";
+import {
+  Navigate,
+  Outlet,
+  RouterProvider,
+  createBrowserRouter,
+} from "react-router-dom";
 import Error from "./views/Error.tsx";
 import "./index.css";
-import Sportifs from "./views/Sportifs.tsx";
-import { logOut } from "../firebase.ts";
 import { NavLink, useNavigate } from "react-router-dom";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import DashboardIcon from "@mui/icons-material/Dashboard";
-import PeopleIcon from "@mui/icons-material/People";
-import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
+
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import LogoutIcon from "@mui/icons-material/Logout";
@@ -27,6 +26,10 @@ import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
+import MovieIcon from "@mui/icons-material/Movie";
+import Films from "./views/Films.tsx";
+import Film from "./views/Film.tsx";
+import { AuthProvider } from "./AuthProvider.tsx";
 
 const drawerWidth: number = 240;
 
@@ -113,12 +116,12 @@ export const MainLayout: React.FC = () => {
             noWrap
             sx={{ flexGrow: 1 }}
           >
-            Dashboard
+            Web Service pour gestion de film
           </Typography>
           <IconButton
             color="inherit"
             onClick={async () => {
-              navigate("/GET");
+              navigate("/films");
             }}
           >
             <LogoutIcon />
@@ -140,44 +143,12 @@ export const MainLayout: React.FC = () => {
         </Toolbar>
         <Divider />
         <List component="nav">
-          <NavLink to="/get">
+          <NavLink to="/films">
             <ListItemButton>
               <ListItemIcon>
-                <DashboardIcon />
+                <MovieIcon />
               </ListItemIcon>
-              <ListItemText primary="get" />
-            </ListItemButton>
-          </NavLink>
-          <NavLink to="/post">
-            <ListItemButton>
-              <ListItemIcon>
-                <DashboardIcon />
-              </ListItemIcon>
-              <ListItemText primary="post" />
-            </ListItemButton>
-          </NavLink>
-          <NavLink to="/put">
-            <ListItemButton>
-              <ListItemIcon>
-                <DashboardIcon />
-              </ListItemIcon>
-              <ListItemText primary="put" />
-            </ListItemButton>
-          </NavLink>
-          <NavLink to="/patch">
-            <ListItemButton>
-              <ListItemIcon>
-                <DashboardIcon />
-              </ListItemIcon>
-              <ListItemText primary="patch" />
-            </ListItemButton>
-          </NavLink>
-          <NavLink to="/delete">
-            <ListItemButton>
-              <ListItemIcon>
-                <DashboardIcon />
-              </ListItemIcon>
-              <ListItemText primary="delete" />
+              <ListItemText primary="films" />
             </ListItemButton>
           </NavLink>
         </List>
@@ -209,28 +180,17 @@ const router = createBrowserRouter([
     errorElement: <Error />,
     children: [
       {
-        path: "/",
-        element: <Sportifs />,
+        path: "/films",
+        element: <Films />,
       },
       {
-        path: "/get",
-        element: <Sportifs />,
+        path: "/film/:uid",
+        element: <Film />,
       },
+
       {
-        path: "/post",
-        element: <Sportifs />,
-      },
-      {
-        path: "/put",
-        element: <Sportifs />,
-      },
-      {
-        path: "/patch",
-        element: <Sportifs />,
-      },
-      {
-        path: "/delete",
-        element: <Sportifs />,
+        path: "*",
+        element: <Navigate to="/films" />,
       },
     ],
   },
@@ -238,6 +198,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   </React.StrictMode>
 );
