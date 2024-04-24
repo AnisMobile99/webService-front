@@ -14,7 +14,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Loading from "../components/Loading";
 import { getFilm } from "../utils/axios";
-import { useAuth } from "../AuthProvider";
+import { useAuth } from "../context/AuthProvider";
 
 interface FilmProps {
   id: number;
@@ -40,9 +40,6 @@ const Film = () => {
         console.log(res.data);
         setFilmData(res.data);
         setLoading(false);
-        setTimeout(() => {
-          console.log(filmData);
-        }, 3000);
       })
       .catch((error) => {
         console.log(error);
@@ -54,13 +51,7 @@ const Film = () => {
     if (uid) {
       fetchFilmData();
     }
-  }, [uid, token]);
-
-  useEffect(() => {
-    if (filmData) {
-      console.log(filmData);
-    }
-  }, [filmData]);
+  }, [uid, token, isAuthenticated]);
 
   if (loading) {
     return <Loading />;
@@ -68,7 +59,7 @@ const Film = () => {
   if (!filmData) {
     return (
       <Box component="section">
-        <Paper sx={{ p: 2 }}>Erreur de chargement ou film introuvable</Paper>
+        <Paper sx={{ p: 2 }}>Le film introuvable</Paper>
       </Box>
     );
   }

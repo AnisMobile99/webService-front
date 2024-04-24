@@ -29,7 +29,7 @@ import IconButton from "@mui/material/IconButton";
 import MovieIcon from "@mui/icons-material/Movie";
 import Films from "./views/Films.tsx";
 import Film from "./views/Film.tsx";
-import { AuthProvider } from "./AuthProvider.tsx";
+import { AuthProvider } from "./context/AuthProvider.tsx";
 
 const drawerWidth: number = 240;
 

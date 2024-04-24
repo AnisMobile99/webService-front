@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Film } from "../Interface/database";
 
 axios.defaults.headers.common["Content-Type"] = "application/json";
 
@@ -24,4 +25,14 @@ export const getFilms = (token: string) => {
 
 export const getFilm = (token: string, uid: number) => {
   return axios.get(serveurUrl + "/get/film/" + uid, setHeaders(token));
+};
+
+export const addFilm = (token: string, film: Film) => {
+  return axios.post(
+    serveurUrl + "/post/film/",
+    {
+      film,
+    },
+    setHeaders(token)
+  );
 };

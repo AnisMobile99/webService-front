@@ -46,8 +46,8 @@ const FilmList: React.FC<filmListProps> = ({ title, data }) => {
                 <TableCell>{film.id}</TableCell>
                 <TableCell>{film.nom}</TableCell>
                 <TableCell>{film.description}</TableCell>
-                <TableCell>{film.note}</TableCell>
                 <TableCell>{film.date_parution}</TableCell>
+                <TableCell>{film.note}</TableCell>
               </TableRow>
             ))}
           </TableBody>
