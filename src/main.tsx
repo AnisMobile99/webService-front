@@ -30,6 +30,7 @@ import MovieIcon from "@mui/icons-material/Movie";
 import Films from "./views/Films.tsx";
 import Film from "./views/Film.tsx";
 import { AuthProvider } from "./context/AuthProvider.tsx";
+import SignIn from "./components/SignIn.tsx";
 
 const drawerWidth: number = 240;
 
@@ -176,6 +177,10 @@ export const MainLayout: React.FC = () => {
 
 const router = createBrowserRouter([
   {
+    path: "/",
+    element: <SignIn />,
+  },
+  {
     element: <MainLayout />,
     errorElement: <Error />,
     children: [
@@ -186,11 +191,6 @@ const router = createBrowserRouter([
       {
         path: "/film/:uid",
         element: <Film />,
-      },
-
-      {
-        path: "*",
-        element: <Navigate to="/films" />,
       },
     ],
   },

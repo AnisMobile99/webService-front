@@ -11,6 +11,7 @@ import { useState } from "react";
 import { addFilm } from "../utils/axios";
 import { useAuth } from "../context/AuthProvider";
 import { Film } from "../Interface/database";
+import BlocResponse from "../components/BlocResponse";
 
 const AddFilm = () => {
   const { token } = useAuth();
@@ -35,7 +36,7 @@ const AddFilm = () => {
         status: response.status,
         statusText: response.statusText,
       };
-      setResponseJSON(JSON.stringify(responseInfo));
+      setResponseJSON(JSON.stringify(responseInfo, null, 2));
     } catch (error: any) {
       console.log(error);
       const errorInfo = {
@@ -43,7 +44,7 @@ const AddFilm = () => {
         status: error.response.status,
         statusText: error.response.statusText,
       };
-      setResponseJSON(JSON.stringify(errorInfo));
+      setResponseJSON(JSON.stringify(errorInfo, null, 2));
     }
   };
   return (
@@ -156,17 +157,7 @@ const AddFilm = () => {
               </Button>
             </Grid>
           </Grid>
-          <Grid
-            container
-            sx={{
-              display: "flex",
-              border: "1px solid black",
-              flexDirection: "column",
-            }}
-          >
-            <Typography> Réponse requete : </Typography>
-            <Box>{responseJSON && responseJSON}</Box>
-          </Grid>
+          {responseJSON && <BlocResponse responseJSON={responseJSON} />}
         </Box>
       </Paper>
     </Box>

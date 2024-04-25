@@ -19,8 +19,14 @@ export const getToken = (username: string, password: string) => {
     password,
   });
 };
-export const getFilms = (token: string) => {
-  return axios.get(serveurUrl + "/get/films", setHeaders(token));
+export const getFilms = (token: string, searchTerm?: string) => {
+  if (!searchTerm) {
+    return axios.get(serveurUrl + "/get/films", setHeaders(token));
+  }
+  return axios.get(
+    serveurUrl + "/get/films?search=" + searchTerm,
+    setHeaders(token)
+  );
 };
 
 export const getFilm = (token: string, uid: number) => {
@@ -35,4 +41,18 @@ export const addFilm = (token: string, film: Film) => {
     },
     setHeaders(token)
   );
+};
+
+export const patchFilm = (token: string, uid: number, film: Film) => {
+  return axios.patch(
+    serveurUrl + "/patch/film/" + uid,
+    {
+      film,
+    },
+    setHeaders(token)
+  );
+};
+
+export const deleteFilm = (token: string, uid: number) => {
+  return axios.delete(serveurUrl + "/delete/film/" + uid, setHeaders(token));
 };
