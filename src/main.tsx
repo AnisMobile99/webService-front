@@ -29,7 +29,7 @@ import IconButton from "@mui/material/IconButton";
 import MovieIcon from "@mui/icons-material/Movie";
 import Films from "./views/Films.tsx";
 import Film from "./views/Film.tsx";
-import { AuthProvider } from "./context/AuthProvider.tsx";
+import { AuthProvider, useAuth } from "./context/AuthProvider.tsx";
 import SignIn from "./components/SignIn.tsx";
 
 const drawerWidth: number = 240;
@@ -88,6 +88,7 @@ export const MainLayout: React.FC = () => {
     setOpen(!open);
   };
   const navigate = useNavigate();
+  const { logout } = useAuth();
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -122,7 +123,8 @@ export const MainLayout: React.FC = () => {
           <IconButton
             color="inherit"
             onClick={async () => {
-              navigate("/films");
+              logout();
+              navigate("/");
             }}
           >
             <LogoutIcon />

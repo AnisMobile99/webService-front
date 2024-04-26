@@ -13,13 +13,13 @@ import { useAuth } from "../context/AuthProvider";
 import { Film } from "../Interface/database";
 import BlocResponse from "../components/BlocResponse";
 
-const AddFilm = () => {
+const AddFilm = ({ setRefreshData }) => {
   const { token } = useAuth();
   const [addFilmModal, setAddFilmModal] = useState(false);
-  const [inputNom, setInputNom] = useState("");
-  const [inputDescription, setInputDescription] = useState("");
-  const [inputDate, setInputDate] = useState("");
-  const [inputNote, setInputNote] = useState("");
+  const [inputNom, setInputNom] = useState("test");
+  const [inputDescription, setInputDescription] = useState("test");
+  const [inputDate, setInputDate] = useState("1999-09-09");
+  const [inputNote, setInputNote] = useState("3");
   const [responseJSON, setResponseJSON] = useState(null);
 
   const handleSubmit = async () => {
@@ -37,6 +37,7 @@ const AddFilm = () => {
         statusText: response.statusText,
       };
       setResponseJSON(JSON.stringify(responseInfo, null, 2));
+      setRefreshData(true);
     } catch (error: any) {
       console.log(error);
       const errorInfo = {

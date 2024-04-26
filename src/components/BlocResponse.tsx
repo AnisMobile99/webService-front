@@ -1,4 +1,5 @@
 import { Box, Grid, Paper, Typography } from "@mui/material";
+import Title from "./Title";
 
 interface BlocResponseProps {
   responseJSON: any;
@@ -6,8 +7,8 @@ interface BlocResponseProps {
 
 const BlocResponse: React.FC<BlocResponseProps> = ({ responseJSON }) => {
   return (
-    <Paper>
-      <Typography> Réponse requete : </Typography>
+    <Paper style={{ maxHeight: 400, overflowY: "auto" }}>
+      <Title>Réponse requete </Title>
       <Box>
         <pre>{responseJSON}</pre>
       </Box>
