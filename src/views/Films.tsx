@@ -34,7 +34,7 @@ const Films = () => {
   const { isAuthenticated, token, login } = useAuth();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(null);
   const [responseJSON, setResponseJSON] = useState(null);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(0);

@@ -31,7 +31,9 @@ export const getFilms = (
   const params = new URLSearchParams();
 
   // Ajouter le terme de recherche s'il est spécifié
-  params.append("search", String(search));
+  if (search) {
+    params.append("search", String(search));
+  }
 
   // Ajouter la pagination s'il elle est spécifiée
   if (page && rowPerPage) {
