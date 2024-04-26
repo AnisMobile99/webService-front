@@ -6,6 +6,8 @@ import {
   Button,
   InputAdornment,
   Typography,
+  Select,
+  MenuItem,
 } from "@mui/material";
 import Loading from "../components/Loading";
 import FilmList from "../components/FilmList";
@@ -15,33 +17,56 @@ import BlocResponse from "../components/BlocResponse";
 import { getFilms, getToken } from "../utils/axios";
 import Title from "../components/Title";
 
+const categories = [
+  { uid: 1, name: "Action" },
+  { uid: 2, name: "Adventure" },
+  { uid: 3, name: "Drama" },
+  { uid: 4, name: "Fantasy" },
+  { uid: 5, name: "Horror" },
+  { uid: 6, name: "Comedy" },
+  { uid: 7, name: "Sci-Fi" },
+  { uid: 8, name: "Documentary" },
+  { uid: 9, name: "Romance" },
+  { uid: 10, name: "Thriller" },
+];
+
 const Films = () => {
   const { isAuthenticated, token, login } = useAuth();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [responseJSON, setResponseJSON] = useState(null);
-  const [page, setPage] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(0);
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   const fetchFilms = async () => {
     setLoading(true);
     try {
-      const res = await getFilms(token, search, page, rowsPerPage);
+      const res = await getFilms(
+        token,
+        search,
+        page,
+        rowsPerPage,
+        selectedCategory
+      );
       setData(res.data.data);
       setResponseJSON(JSON.stringify(res, null, 2));
     } catch (error) {
-      setResponseJSON(JSON.stringify({ message: error.message }, null, 2));
+      const errorInfo = {
+        message: error.response.data,
+        status: error.response.status,
+        statusText: error.response.statusText,
+      };
+      setResponseJSON(JSON.stringify({ errorInfo }, null, 2));
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    if (token) {
-      fetchFilms();
-    }
-  }, [token, page, rowsPerPage, search]);
+    fetchFilms();
+  }, [token, page, rowsPerPage, search, selectedCategory]);
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
@@ -78,6 +103,25 @@ const Films = () => {
             endAdornment: <InputAdornment position="end">Rows</InputAdornment>,
           }}
         />
+      </Paper>
+
+      <Paper sx={{ p: 2 }}>
+        <Title>Filtrer les films par catégorie</Title>
+        <Select
+          value={selectedCategory}
+          onChange={(e) => setSelectedCategory(e.target.value)}
+          displayEmpty
+          fullWidth
+          variant="outlined"
+          sx={{ my: 2 }}
+        >
+          <MenuItem value="">Sélectionner une catégorie</MenuItem>
+          {categories.map((category) => (
+            <MenuItem key={category.uid} value={category.name}>
+              {category.name}
+            </MenuItem>
+          ))}
+        </Select>
       </Paper>
       <AddFilm setRefreshData={fetchFilms} />
       <Paper sx={{ p: 2 }}>

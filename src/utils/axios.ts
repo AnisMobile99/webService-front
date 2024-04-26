@@ -19,18 +19,19 @@ export const getToken = (username: string, password: string) => {
     password,
   });
 };
+
 export const getFilms = (
   token: string,
   search?: string,
   page?: number,
-  rowPerPage?: number
+  rowPerPage?: number,
+  selectedCategory?: string
 ) => {
   // Construire les paramètres de la requête en fonction des arguments fournis
   const params = new URLSearchParams();
 
   // Ajouter le terme de recherche s'il est spécifié
-
-  params.append("search", search);
+  params.append("search", String(search));
 
   // Ajouter la pagination s'il elle est spécifiée
   if (page && rowPerPage) {
@@ -39,6 +40,9 @@ export const getFilms = (
     params.append("rowPerPage", String(rowPerPage));
   }
 
+  if (selectedCategory) {
+    params.append("selectedCategory", String(selectedCategory));
+  }
   // Effectuer la requête avec les paramètres et les en-têtes appropriés
   return axios.get(
     `${serveurUrl}/get/films?${params.toString()}`,
