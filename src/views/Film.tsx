@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
+  Chip,
   Grid,
   IconButton,
   Input,
@@ -23,6 +24,7 @@ interface FilmProps {
   description?: string;
   date_parution?: string;
   note?: number;
+  categories?: { uid: number; name: string }[];
 }
 
 const Film = () => {
@@ -161,6 +163,22 @@ const Film = () => {
                 <Typography variant="h6">
                   <strong>Description: </strong>
                   {filmData.description}
+                </Typography>
+
+                <Typography variant="h6">
+                  {" "}
+                  <strong>Categories: </strong>
+                  {filmData.categories ? (
+                    filmData.categories.map((cat) => (
+                      <Chip
+                        key={cat.uid}
+                        label={cat.name}
+                        style={{ margin: "2px" }}
+                      />
+                    ))
+                  ) : (
+                    <> Aucune</>
+                  )}
                 </Typography>
 
                 <Typography variant="h6">

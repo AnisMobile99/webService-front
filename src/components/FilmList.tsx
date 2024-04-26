@@ -7,7 +7,7 @@ import Title from "./Title";
 import Loading from "./Loading";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { TableContainer, TablePagination } from "@mui/material";
+import { Chip, TableContainer, TablePagination } from "@mui/material";
 
 type ListFilmType = {
   id: number;
@@ -15,6 +15,7 @@ type ListFilmType = {
   description: string;
   date_parution: string;
   note: 0 | 1 | 2 | 3 | 4 | 5;
+  categories: { uid: number; name: string }[];
 }[];
 
 type filmListProps = {
@@ -55,6 +56,7 @@ const FilmList: React.FC<filmListProps> = ({ title, data }) => {
                   <TableCell>Id</TableCell>
                   <TableCell>Nom</TableCell>
                   <TableCell>Description</TableCell>
+                  <TableCell>Catégorie</TableCell>
                   <TableCell>Date de parution</TableCell>
                   <TableCell>Note</TableCell>
                 </TableRow>
@@ -70,6 +72,19 @@ const FilmList: React.FC<filmListProps> = ({ title, data }) => {
                       <TableCell>{film.id}</TableCell>
                       <TableCell>{film.nom}</TableCell>
                       <TableCell>{film.description}</TableCell>
+                      <TableCell>
+                        {film.categories ? (
+                          film.categories.map((cat) => (
+                            <Chip
+                              key={cat.uid}
+                              label={cat.name}
+                              style={{ margin: "2px" }}
+                            />
+                          ))
+                        ) : (
+                          <> Aucune</>
+                        )}
+                      </TableCell>
                       <TableCell>{film.date_parution}</TableCell>
                       <TableCell>{film.note}</TableCell>
                     </TableRow>

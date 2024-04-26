@@ -3,4 +3,5 @@ export interface Film {
   description: string;
   date_parution: string;
   note: number;
+  categorie?: string;
 }
