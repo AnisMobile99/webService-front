@@ -58,6 +58,7 @@ const Films = () => {
         status: error.response.status,
         statusText: error.response.statusText,
       };
+      setData(null);
       setResponseJSON(JSON.stringify({ errorInfo }, null, 2));
     } finally {
       setLoading(false);

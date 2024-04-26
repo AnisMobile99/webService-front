@@ -7,7 +7,7 @@ import Title from "./Title";
 import Loading from "./Loading";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { Chip, TableContainer, TablePagination } from "@mui/material";
+import { Box, Chip, TableContainer, TablePagination } from "@mui/material";
 
 type ListFilmType = {
   id: number;
@@ -112,7 +112,7 @@ const FilmList: React.FC<filmListProps> = ({ title, data }) => {
           />
         </>
       ) : (
-        <Loading />
+        <Box> Aucun film retrouvé</Box>
       )}
     </>
   );
